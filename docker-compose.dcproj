@@ -6,7 +6,7 @@
     <ProjectGuid>ee155e46-0f36-44d5-8d77-d0cd25a6e300</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>ex1.api</DockerServiceName>
+    <DockerServiceName>ex1api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

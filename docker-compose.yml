@@ -1,16 +1,16 @@
 version: '3.4'
 
-networks:
-  ex1network:
-
 services:
-  ex1.api:
+  ex1api:
     container_name: ex1_api
-    image: ${DOCKER_REGISTRY-}ex1.api
+    image: ${DOCKER_REGISTRY-}ex1api
     restart: "no"
     build:
       context: .
       dockerfile: Ex1.API/Dockerfile
+    expose:
+      - "80" #http
+      - "443" #https
     ports:
       - 5325:80
     depends_on:
@@ -20,9 +20,7 @@ services:
       - DB_NAME=Ex1
       - DB_PASSWORD=root
       - DB_USER=root
-    networks:
-      - ex1network
-  ex1.web.svelte:
+  ex1websvelte:
     container_name: ex1_web_svelte
     image: ${DOCKER_REGISTRY-}ex1.web.svelte
     restart: "no"
@@ -30,15 +28,13 @@ services:
       context: Ex1.Web/ex1-svelte
       dockerfile: Dockerfile
       args:
-        - PUBLIC_API_PATH=https://ex1.api
+        - PUBLIC_API_PATH=http://localhost:5325/
     ports:
       - 5326:3000
     depends_on:
-      - ex1.api
+      - ex1api
     environment:
       - PORT=3000
-    networks:
-      - ex1network
   db:
     container_name: ex1_postgres_db
     image: postgres:15.2
@@ -49,8 +45,6 @@ services:
       POSTGRES_DB: Ex1
     ports:
       - "5432:5432"
-    networks:
-      - ex1network
   pgadmin:
     container_name: ex1_pgadmin
     image: dpage/pgadmin4:6.14
@@ -62,5 +56,3 @@ services:
       - "5050:80"
     depends_on:
       - db
-    networks:
-      - ex1network
