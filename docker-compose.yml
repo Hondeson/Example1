@@ -1,0 +1,49 @@
+version: '3.4'
+
+networks:
+ ex1network:
+
+services:
+  ex1.api:
+    container_name: ex1_api
+    image: ${DOCKER_REGISTRY-}ex1api
+    restart: "no"
+    build:
+      context: .
+      dockerfile: Ex1.API/Dockerfile
+    ports:
+      - 5325:80
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=Ex1
+      - DB_PASSWORD=root
+      - DB_USER=root
+    networks:
+      - ex1network
+  db:
+    container_name: ex1_postgres_db
+    image: postgres:15.2
+    restart: "no"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: Ex1
+    ports:
+      - "5432:5432"
+    networks:
+      - ex1network
+  pgadmin:
+    container_name: ex1_pgadmin
+    image: dpage/pgadmin4:6.14
+    restart: "no"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - ex1network

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1.API", "Ex1.API\Ex1.API.csproj", "{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EE155E46-0F36-44D5-8D77-D0CD25A6E300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1.Model", "Ex1.Model\Ex1.Model.csproj", "{84F32781-D5CE-4BDD-A165-A928575AC51E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE155E46-0F36-44D5-8D77-D0CD25A6E300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE155E46-0F36-44D5-8D77-D0CD25A6E300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE155E46-0F36-44D5-8D77-D0CD25A6E300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE155E46-0F36-44D5-8D77-D0CD25A6E300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {934651EC-F20C-443E-8F91-7CA293BA9694}
+	EndGlobalSection
+EndGlobal
