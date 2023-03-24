@@ -2,7 +2,6 @@
 using Ex1.Model.Model;
 using Ex1.Model.Request;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Ex1.API.Controllers
 {
@@ -33,12 +32,12 @@ namespace Ex1.API.Controllers
         {
             try
             {
-                var res = db.Users.ToList();
+                var res = db.Users.ToArray();
 
-                if (res.Count == 0)
+                if (res.Length == 0)
                     return NoContent();
 
-                return Ok(res);
+                return Ok(res.Select(x => new UserModel(x)).ToArray());
             }
             catch (Exception ex)
             {
@@ -60,7 +59,7 @@ namespace Ex1.API.Controllers
                 if (res is null)
                     return NotFound();
 
-                return Ok(res);
+                return Ok(new UserModel(res));
             }
             catch (Exception ex)
             {
@@ -71,12 +70,19 @@ namespace Ex1.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] //prověřit
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Post([FromBody] UserModel user)
         {
             try
             {
+                if (!user.IsEmailValid())
+                    return BadRequest(user.Email);
+
+                if (!user.IsFullNameValid())
+                    return BadRequest(user.FullName);
+
                 //email nemůže již existovat
                 var obj = db.Users.FirstOrDefault(x => x.Email == user.Email);
                 if (obj is not null)
@@ -93,6 +99,7 @@ namespace Ex1.API.Controllers
                 };
 
                 db.Users.Add(dbUser);
+                db.SaveChanges();
 
                 return CreatedAtRoute(nameof(Get), new { dbUser.Id }, user);
             }
@@ -111,6 +118,12 @@ namespace Ex1.API.Controllers
         {
             try
             {
+                if (!user.IsEmailValid())
+                    return BadRequest(user.Email);
+
+                if (!user.IsFullNameValid())
+                    return BadRequest(user.FullName);
+
                 var obj = db.Users.FirstOrDefault(x => x.Id == id);
                 if (obj is null)
                     return NotFound();
