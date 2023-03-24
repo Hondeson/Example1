@@ -1,4 +1,5 @@
-﻿using Ex1.Model;
+﻿using Ex1.API.Services.Users;
+using Ex1.Model;
 using Ex1.Model.Model;
 using Ex1.Model.Request;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,12 @@ namespace Ex1.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> log;
-        private readonly Ex1Context db;
+        private readonly IUsersService _usrSvc;
 
-        public UsersController(ILogger<UsersController> log, Ex1Context db)
+        public UsersController(ILogger<UsersController> log, IUsersService usrSvc)
         {
             this.log = log;
-            this.db = db;
+            this._usrSvc = usrSvc;
         }
 
         /// <summary>
@@ -32,9 +33,9 @@ namespace Ex1.API.Controllers
         {
             try
             {
-                var res = db.Users.ToArray();
+                var res = _usrSvc.Get();
 
-                if (res.Length == 0)
+                if (res.Count == 0)
                     return NoContent();
 
                 return Ok(res.Select(x => new UserModel(x)).ToArray());
@@ -54,7 +55,7 @@ namespace Ex1.API.Controllers
         {
             try
             {
-                var res = db.Users.FirstOrDefault(x => x.Id == id);
+                var res = _usrSvc.Get(id);
 
                 if (res is null)
                     return NotFound();
@@ -84,7 +85,7 @@ namespace Ex1.API.Controllers
                     return BadRequest(user.FullName);
 
                 //email nemůže již existovat
-                var obj = db.Users.FirstOrDefault(x => x.Email == user.Email);
+                var obj = _usrSvc.GetByEmailAdress(user.Email);
                 if (obj is not null)
                     return Conflict(nameof(user.Email));
 
@@ -98,10 +99,10 @@ namespace Ex1.API.Controllers
                     Interests = user.Interests
                 };
 
-                db.Users.Add(dbUser);
-                db.SaveChanges();
+                _usrSvc.Create(dbUser, out long createdId);
+                user.Id = createdId;
 
-                return CreatedAtRoute(nameof(Get), new { dbUser.Id }, user);
+                return CreatedAtRoute(nameof(Get), new { user.Id }, user);
             }
             catch (Exception ex)
             {
@@ -124,7 +125,7 @@ namespace Ex1.API.Controllers
                 if (!user.IsFullNameValid())
                     return BadRequest(user.FullName);
 
-                var obj = db.Users.FirstOrDefault(x => x.Id == id);
+                var obj = _usrSvc.Get(id);
                 if (obj is null)
                     return NotFound();
 
@@ -135,7 +136,7 @@ namespace Ex1.API.Controllers
                 obj.EducationMaxReached = user.EducationMaxReached;
                 obj.Interests = user.Interests;
 
-                db.SaveChanges();
+                _usrSvc.Update(obj);
 
                 return Ok();
             }
@@ -154,12 +155,11 @@ namespace Ex1.API.Controllers
         {
             try
             {
-                var obj = db.Users.FirstOrDefault(x => x.Id == id);
+                var obj = _usrSvc.Get(id);
                 if (obj is null)
                     return NotFound();
 
-                db.Users.Remove(obj);
-                db.SaveChanges();
+                _usrSvc.Delete(obj);
 
                 return Ok();
             }

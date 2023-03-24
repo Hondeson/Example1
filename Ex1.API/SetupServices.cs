@@ -1,4 +1,5 @@
-﻿using Ex1.Model;
+﻿using Ex1.API.Services.Users;
+using Ex1.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -24,6 +25,7 @@ namespace Ex1.API
                 throw new Exception("Invalid connection string!");
 
             services.AddDbContext<Ex1Context>(options => options.UseNpgsql(connString));
+            services.AddScoped<IUsersService, UsersDbContextService>();
         }
     }
 }
