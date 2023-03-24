@@ -3,6 +3,9 @@
 #######################################
 FROM node:18.14 as builder
 
+ARG PUBLIC_API_PATH
+ENV PUBLIC_API_PATH $PUBLIC_API_PATH
+
 WORKDIR /app
 
 # install npm dependencies (cache second)
