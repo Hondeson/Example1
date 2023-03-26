@@ -3,6 +3,7 @@ using Ex1.Model;
 using Ex1.Model.Model;
 using Ex1.Model.Request;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ex1.API.Controllers
 {
@@ -10,18 +11,24 @@ namespace Ex1.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ILogger<UsersController> log;
+        private readonly ILogger<UsersController> _log;
         private readonly IUsersService _usrSvc;
+        private readonly IUserValidationService _usrValSvc;
 
-        public UsersController(ILogger<UsersController> log, IUsersService usrSvc)
+        public UsersController(
+            ILogger<UsersController> log,
+            IUsersService usrSvc,
+            IUserValidationService usrValSvc)
         {
-            this.log = log;
+            this._log = log;
             this._usrSvc = usrSvc;
+            this._usrValSvc = usrValSvc;
         }
 
         /// <summary>
         /// Vrací seznam všech uživatelů
         /// </summary>
+        /// <returns>pole všech uživatelů</returns>
         /// <response code="200">Pole všech uživatelů</response>
         /// <response code="204">Pole obsahuje 0 položek</response>
         /// <response code="500">Chyba</response>
@@ -42,16 +49,24 @@ namespace Ex1.API.Controllers
             }
             catch (Exception ex)
             {
-                log.LogError(ex, ex.Message);
+                _log.LogError(ex, ex.Message);
                 return Problem(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Podle id vrátí uživatele
+        /// </summary>
+        /// <returns>uživatele</returns>
+        /// <param name="id">id uživatele</param>
+        /// <response code="200">Vrací uživatele</response>
+        /// <response code="404">Uživatel nenalezen</response>
+        /// <response code="500">Chyba</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Get(int id)
+        public IActionResult Get([Required] int id)
         {
             try
             {
@@ -64,24 +79,33 @@ namespace Ex1.API.Controllers
             }
             catch (Exception ex)
             {
-                log.LogError(ex, ex.Message);
+                _log.LogError(ex, ex.Message);
                 return Problem(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Vytvoří uživatele
+        /// </summary>
+        /// <param name="user">uživatel, kterého chceme vytvořit</param>
+        /// <returns>Cestu na které byl uživatel vytvořen</returns>
+        /// <response code="200">Uživatel vytvořen</response>
+        /// <response code="400">Invalidní hodnota parametru</response>
+        /// <response code="409">Uživatel již existuje</response>
+        /// <response code="500">Chyba</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)] //prověřit
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Post([FromBody] UserModel user)
         {
             try
             {
-                if (!user.IsEmailValid())
+                if (!_usrValSvc.IsEmailValid(user))
                     return BadRequest(user.Email);
 
-                if (!user.IsFullNameValid())
+                if (!_usrValSvc.IsFullNameValid(user))
                     return BadRequest(user.FullName);
 
                 //email nemůže již existovat
@@ -94,35 +118,43 @@ namespace Ex1.API.Controllers
                     FullName = user.FullName,
                     Email = user.Email,
                     BornDate = user.BornDate,
-                    Gender = user.Gender,
-                    EducationMaxReached = user.EducationMaxReached,
+                    Gender = (int)user.Gender,
+                    EducationMaxReached = (int)user.EducationMaxReached,
                     Interests = user.Interests
                 };
 
                 _usrSvc.Create(dbUser, out long createdId);
                 user.Id = createdId;
 
-                return CreatedAtRoute(nameof(Get), new { user.Id }, user);
+                return CreatedAtRoute(nameof(Get), new { id = user.Id }, user);
             }
             catch (Exception ex)
             {
-                log.LogError(ex, ex.Message);
+                _log.LogError(ex, ex.Message);
                 return Problem(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Updatuje uživatele
+        /// </summary>
+        /// <param name="id">ID uživatele, kterého chceme updatovat</param>
+        /// <param name="user">Hodnoty uživatele, které chceme updatovat (mimo ID)</param>
+        /// <response code="200">Uživatel updatován</response>
+        /// <response code="404">Uživatel nenalezen</response>
+        /// <response code="500">Chyba</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Put(int id, [FromBody] UserModel user)
+        public IActionResult Put([Required] int id, [FromBody] UserModel user)
         {
             try
             {
-                if (!user.IsEmailValid())
+                if (!_usrValSvc.IsEmailValid(user))
                     return BadRequest(user.Email);
 
-                if (!user.IsFullNameValid())
+                if (!_usrValSvc.IsFullNameValid(user))
                     return BadRequest(user.FullName);
 
                 var obj = _usrSvc.Get(id);
@@ -132,8 +164,8 @@ namespace Ex1.API.Controllers
                 obj.FullName = user.FullName;
                 obj.Email = user.Email;
                 obj.BornDate = user.BornDate;
-                obj.Gender = user.Gender;
-                obj.EducationMaxReached = user.EducationMaxReached;
+                obj.Gender = (int)user.Gender;
+                obj.EducationMaxReached = (int)user.EducationMaxReached;
                 obj.Interests = user.Interests;
 
                 _usrSvc.Update(obj);
@@ -142,11 +174,18 @@ namespace Ex1.API.Controllers
             }
             catch (Exception ex)
             {
-                log.LogError(ex, ex.Message);
+                _log.LogError(ex, ex.Message);
                 return Problem(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Smaže uživatele
+        /// </summary>
+        /// <param name="id">id uživatele, kterého chceme smazat</param>
+        /// <response code="200">Uživatel smazán</response>
+        /// <response code="404">Uživatel neexistuje</response>
+        /// <response code="500">Chyba</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -165,7 +204,7 @@ namespace Ex1.API.Controllers
             }
             catch (Exception ex)
             {
-                log.LogError(ex, ex.Message);
+                _log.LogError(ex, ex.Message);
                 return Problem(ex.Message);
             }
         }

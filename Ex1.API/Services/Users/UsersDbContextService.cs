@@ -16,7 +16,7 @@ namespace Ex1.API.Services.Users
             return db.Users.ToList();
         }
 
-        public User Get(int id)
+        public User Get(long id)
         {
             return db.Users.FirstOrDefault(x => x.Id == id);
         }

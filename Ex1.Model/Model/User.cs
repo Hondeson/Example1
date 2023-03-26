@@ -12,9 +12,9 @@ public partial class User
 
     public DateOnly BornDate { get; set; }
 
-    public string Gender { get; set; } = null!;
+    public int Gender { get; set; }
 
-    public string EducationMaxReached { get; set; } = null!;
+    public int EducationMaxReached { get; set; }
 
     public string? Interests { get; set; }
 }

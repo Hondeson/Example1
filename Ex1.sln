@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1.API", "Ex1.API\Ex1.API.csproj", "{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ex1.API", "Ex1.API\Ex1.API.csproj", "{1CD5D866-3E43-4107-8A6A-0E0F40FE0D71}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EE155E46-0F36-44D5-8D77-D0CD25A6E300}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1.Model", "Ex1.Model\Ex1.Model.csproj", "{84F32781-D5CE-4BDD-A165-A928575AC51E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ex1.Model", "Ex1.Model\Ex1.Model.csproj", "{84F32781-D5CE-4BDD-A165-A928575AC51E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1.Web", "Ex1.Web\Ex1.Web.csproj", "{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ex1.Web", "Ex1.Web\Ex1.Web.csproj", "{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,9 +30,7 @@ Global
 		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84F32781-D5CE-4BDD-A165-A928575AC51E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A40F0D61-022B-42AB-9AEB-D4DE0006E7A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

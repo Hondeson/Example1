@@ -18,8 +18,8 @@ namespace Ex1.Model.Request
             this.FullName = user.FullName;
             this.Email = user.Email;
             this.BornDate = user.BornDate;
-            this.Gender = user.Gender;
-            this.EducationMaxReached = user.EducationMaxReached;
+            this.Gender = (GenderEnum)user.Gender;
+            this.EducationMaxReached = (EducationEnum)user.EducationMaxReached;
             this.Interests = user.Interests;
         }
 
@@ -31,24 +31,10 @@ namespace Ex1.Model.Request
 
         public DateOnly BornDate { get; set; }
 
-        public string Gender { get; set; } = null!;
+        public GenderEnum Gender { get; set; }
 
-        public string EducationMaxReached { get; set; } = null!;
+        public EducationEnum EducationMaxReached { get; set; }
 
         public string? Interests { get; set; }
-    }
-
-    public static class UserModelValidator
-    {
-        public static bool IsEmailValid(this UserModel user)
-        {
-            return MailAddress.TryCreate(user.Email, out _);
-        }
-
-        static readonly Regex _nameRegex = new Regex(@"^\w+(\s+\w+)+$", RegexOptions.Compiled);
-        public static bool IsFullNameValid(this UserModel user)
-        {
-            return _nameRegex.IsMatch(user.FullName);
-        }
     }
 }
