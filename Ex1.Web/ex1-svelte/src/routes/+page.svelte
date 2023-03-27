@@ -2,7 +2,6 @@
     import Tabs from "../components/Tabs.svelte";
     import UserGridTab from "../components/tabs/UserGridTab.svelte";
     import CreateUserTab from "../components/tabs/CreateUserTab.svelte";
-    import NewUserForm from "../components/NewUserForm.svelte";
 
     let items = [
         { label: "Uživatelé", value: 1, component: UserGridTab },
@@ -16,7 +15,7 @@
 
 <style>
     .content {
-        margin: 100px 60px;
+        margin: 0px 60px;
         height: 80%;
     }
 </style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    export let name: string;
     export let title: string;
     export let value: any;
     export let group: any;
@@ -7,7 +6,7 @@
 
 <div class="container">
     <label>
-        <input type="radio" bind:group {name} {value} />
+        <input type="radio" bind:group {value} />
         {title}
     </label>
 </div>

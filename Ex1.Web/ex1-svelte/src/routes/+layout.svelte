@@ -32,6 +32,8 @@
     </div>
 </header>
 
+//TODO: nový docker img databaze
+
 <main class="content">
     <slot />
 </main>

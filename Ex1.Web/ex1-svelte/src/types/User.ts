@@ -1,13 +1,14 @@
 import { Gender } from "./Gender";
 import type { DateOnly } from "./DateOnly"
 import { getNewDateOnly } from "./DateOnly"
+import { Education } from "./Education";
 interface User {
     id: number,
     fullName: string,
     email: string,
     bornDate: DateOnly,
     gender: Gender,
-    educationMaxReached: string,
+    educationMaxReached: Education,
     interests: string
 }
 
@@ -19,7 +20,7 @@ const getNewUser = (): User => {
         email: "",
         gender: Gender.NotSpecified,
         interests: "",
-        educationMaxReached: "",
+        educationMaxReached: Education.NotSpecified,
     };
 
     return user;

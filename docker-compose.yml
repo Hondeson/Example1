@@ -37,7 +37,10 @@ services:
       - PORT=3000
   db:
     container_name: ex1_postgres_db
-    image: hondeson/ex1-db-psg:clean
+    image: hondeson/ex1-db-postgres:clean
+    build:
+      context: Ex1.Model
+      dockerfile: Docker/Dockerfile-postgres
     restart: "no"
     environment:
       POSTGRES_USER: root

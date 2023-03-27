@@ -1,0 +1,37 @@
+<script lang="ts">
+    import { DateInput, localeFromDateFnsLocale } from "date-picker-svelte";
+    import { cs, enUS } from "date-fns/locale";
+    import type { DateOnly } from "../../../types/DateOnly";
+
+    export let selectedValue: DateOnly;
+    export let displayErrorText: string = "";
+
+    let locale = localeFromDateFnsLocale(cs);
+
+    let selectedDate: Date | undefined | null = null;
+    const onSelectedDate = () => {
+        if (selectedDate === undefined || selectedDate == null) return;
+
+        selectedValue = {
+            year: selectedDate.getFullYear(),
+            month: selectedDate.getMonth(),
+            day: selectedDate.getDate(),
+        };
+    };
+
+    $: selectedDate, onSelectedDate();
+</script>
+
+<label for="bornDate">Datum narození</label>
+<DateInput
+    bind:value={selectedDate}
+    format="dd.MM.yyyy"
+    placeholder=""
+    {locale}
+/>
+
+<div class="form-error-field">{displayErrorText}</div>
+
+<style>
+    
+</style>

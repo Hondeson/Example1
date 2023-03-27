@@ -1,5 +1,5 @@
 <script lang="ts">
-    import NewUserForm from "../NewUserForm.svelte";
+    import NewUserForm from "../user/NewUserForm.svelte";
 </script>
 
 <div class="content">

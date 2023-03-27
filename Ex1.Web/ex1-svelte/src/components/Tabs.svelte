@@ -14,6 +14,7 @@
     {#each items as item}
         <li class={activeTabValue === item.value ? "active" : ""}>
             <span
+                style="user-select: none;"
                 on:click={handleClick(item.value)}
                 on:keydown={(event) => handleKeyDown(event, item.value)}
             >
@@ -41,7 +42,7 @@
         height: 100%;
         min-height: 600px;
     }
-    
+
     ul {
         display: flex;
         flex-wrap: wrap;
