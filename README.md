@@ -1,4 +1,4 @@
-# Ex1
+# Example 1
 
 ## Zadání
 Vytvoř libovolnou webovou stránku určenou k založení záznamu. <br><br>
