@@ -20,18 +20,21 @@
     };
 
     $: selectedDate, onSelectedDate();
+
+    const labelText = "Datum narození";
 </script>
 
-<label for="bornDate">Datum narození</label>
-<DateInput
-    bind:value={selectedDate}
-    format="dd.MM.yyyy"
-    placeholder=""
-    {locale}
-/>
+<label for="bornDate">
+    {labelText}
+    <DateInput
+        bind:value={selectedDate}
+        format="dd.MM.yyyy"
+        placeholder=""
+        {locale}
+    />
+</label>
 
 <div class="form-error-field">{displayErrorText}</div>
 
 <style>
-    
 </style>

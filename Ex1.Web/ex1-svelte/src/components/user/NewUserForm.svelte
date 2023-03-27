@@ -21,7 +21,7 @@
     let valid: boolean = false;
 
     const nameRegex = /^(\w+\s){1,}\w+$/;
-    const submitHandler = (): void => {
+    const submitHandler = (event: any): void => {
         valid = true;
 
         if (!nameRegex.test(user.fullName)) {
@@ -56,10 +56,18 @@
             valid = false;
             errors.educationMaxReached = "Zvolte maximální dosažené vzdělání!";
         } else {
-            errors.educationMaxReached = "Zvolte datum narození!";
+            errors.educationMaxReached = "";
         }
 
-        if (valid === true) createUser();
+        if (valid === false) return;
+        createUser();
+
+        event.target.reset();
+    };
+
+    let resetKey: boolean = false;
+    const resetHandler = (): any => {
+        resetKey = !resetKey;
     };
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,8 +76,6 @@
     };
 
     const createUser = () => {
-        console.log("d");
-
         fetch(PUBLIC_API_PATH + "api/Users", {
             method: "POST",
             headers: {
@@ -86,11 +92,25 @@
         });
     };
 
-    const notify = (result: boolean): void => {};
+    let resultStyle: string = "p-Ok";
+    let resultText: string = "";
+    const notify = (result: boolean): void => {
+        if (result === true) {
+            resultText = "Výsledek: OK";
+            resultStyle = "p-OK";
+
+            setTimeout(() => {
+                resultText = "";
+            }, 2000);
+        } else {
+            resultStyle = "p-Error";
+            resultText = "Výsledek: Chyba";
+        }
+    };
 </script>
 
 <div class="form-container">
-    <form on:submit|preventDefault={submitHandler}>
+    <form on:submit={submitHandler} on:reset={resetHandler}>
         <div style="display: flex;">
             <div style="display: block;">
                 <div class="form-field">
@@ -115,10 +135,12 @@
                 </div>
 
                 <div class="form-field">
-                    <UserEducationFormPart
-                        bind:selectedValue={user.educationMaxReached}
-                        displayErrorText={errors.educationMaxReached}
-                    />
+                    {#key resetKey}
+                        <UserEducationFormPart
+                            bind:selectedValue={user.educationMaxReached}
+                            displayErrorText={errors.educationMaxReached}
+                        />
+                    {/key}
                 </div>
             </div>
         </div>
@@ -131,16 +153,22 @@
         </div>
 
         <div class="form-field interests-container">
-            <UserInterestsFormPart />
+            <UserInterestsFormPart bind:jsonValue={user.interests} />
         </div>
 
-        <div style="display: flex; justify-content: end;  margin-top: 30px;">
-            <button
-                type="button"
-                class="full-button"
-                style="margin-right: 40px;">Smazat</button
-            >
-            <button type="submit" class="full-button">Vytvořit</button>
+        <div style="display: flex; justify-content: space-between;">
+            <div class="result-container">
+                <p class={resultStyle}>{resultText}</p>
+            </div>
+
+            <div class="form-field-buttons">
+                <button
+                    type="reset"
+                    class="full-button"
+                    style="margin-right: 40px;">Znovu</button
+                >
+                <button type="submit" class="full-button">Vytvořit</button>
+            </div>
         </div>
     </form>
 </div>
@@ -149,17 +177,40 @@
     .form-container {
         display: flex;
         justify-content: center;
-        align-items: center;
     }
 
+    .result-container,
+    .form-field-buttons,
     .form-field {
         display: block;
         margin: 15px 35px;
     }
 
-    label {
-        margin: 10px auto;
-        text-align: left;
+    .form-field-buttons {
+        display: flex;
+        justify-content: end;
+    }
+
+    .form-field > input {
         display: block;
+    }
+
+    .result-container {
+        text-align: center;
+        align-items: center;
+    }
+
+    .p-OK {
+        color: green;
+    }
+
+    .p-Error {
+        color: rgb(183, 0, 0);
+    }
+
+    p {
+        margin: 8px;
+        font-weight: 500;
+        padding: 0px;
     }
 </style>

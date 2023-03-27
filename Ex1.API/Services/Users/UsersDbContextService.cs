@@ -11,9 +11,13 @@ namespace Ex1.API.Services.Users
             this.db = db;
         }
 
-        public List<User> Get()
+        public List<User> Get(int offset, int limit)
         {
-            return db.Users.ToList();
+            return 
+                db.Users.OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(limit)
+                .ToList();
         }
 
         public User Get(long id)

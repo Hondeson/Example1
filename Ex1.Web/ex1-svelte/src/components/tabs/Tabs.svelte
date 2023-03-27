@@ -35,12 +35,13 @@
 <style>
     .box {
         margin-bottom: 10px;
-        padding: 40px;
+        padding: 20px 40px;
         border: 1px solid #dee2e6;
         border-radius: 0 0 0.5rem 0.5rem;
         border-top: 0;
         height: 100%;
         min-height: 600px;
+        background-color: var(--content-color);
     }
 
     ul {
@@ -69,8 +70,8 @@
     }
 
     li.active > span {
-        color: #495057;
-        background-color: #fff;
+        color: var(--foreground-color);
+        background-color: var(--selected-color);
         border-color: #dee2e6 #dee2e6 #fff;
     }
 </style>

@@ -36,11 +36,11 @@ namespace Ex1.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Get()
+        public IActionResult Get(int offset, int limit)
         {
             try
             {
-                var res = _usrSvc.Get();
+                var res = _usrSvc.Get(offset, limit);
 
                 if (res.Count == 0)
                     return NoContent();
@@ -62,11 +62,11 @@ namespace Ex1.API.Controllers
         /// <response code="200">Vrací uživatele</response>
         /// <response code="404">Uživatel nenalezen</response>
         /// <response code="500">Chyba</response>
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(Get))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Get([Required] int id)
+        public IActionResult Get([Required] long id)
         {
             try
             {
@@ -147,7 +147,7 @@ namespace Ex1.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Put([Required] int id, [FromBody] UserModel user)
+        public IActionResult Put([Required] long id, [FromBody] UserModel user)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace Ex1.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(long id)
         {
             try
             {

@@ -26,6 +26,17 @@ const getNewUser = (): User => {
     return user;
 }
 
+// const clearUser = (user:User) =>{
+    
+//         user.id= 0;
+//         user.fullName = ""
+//         user.bornDate = getNewDateOnly();
+//         user.email ="";
+//         user.gender = Gender.NotSpecified;
+//         user.interests = "";
+//         educationMaxReached: Education.NotSpecified,
+// }
+
 export {
     type User,
     getNewUser

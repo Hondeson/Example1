@@ -29,7 +29,7 @@
         />
     {/each}
 </div>
-<div class="form-error-field">{displayErrorText}</div>
+<div class="form-error-field" style="margin-top: 8px;">{displayErrorText}</div>
 
 <style>
     .container {

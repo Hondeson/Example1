@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Tabs from "../components/Tabs.svelte";
+    import Tabs from "../components/tabs/Tabs.svelte";
     import UserGridTab from "../components/tabs/UserGridTab.svelte";
     import CreateUserTab from "../components/tabs/CreateUserTab.svelte";
 

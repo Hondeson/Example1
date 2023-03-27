@@ -1,25 +1,63 @@
-body {
-  font-family: 'Roboto', sans-serif;
+/* #region theming*/
+:root {
+  --background-color: white;
+  --foreground-color: black;
+  --content-color: var(--background-color);
+  --selected-color: #efefef;
+  --disabled-color: #E1E1E1;
+  --input-background: var(--background-color);
 }
 
-h1{
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+}
+
+body.dark-mode {
+  --background-color: black;
+  --foreground-color: rgb(224, 224, 224);
+  --content-color: rgb(33, 33, 37);
+  --input-background: rgb(21, 21, 24);
+  --selected-color: rgb(21, 21, 24);
+  --disabled-color: var(--content-color);
+
+  --date-picker-background: var(--input-background);
+  --date-picker-foreground: var(--foreground-color);
+}
+
+/* #endregion */
+
+textarea {
+  background-color: var(--input-background);
+  border: 1px solid var(--foreground-color);
+  color: var(--foreground-color);
+}
+
+textarea:disabled {
+  background-color: var(--disabled-color);
+}
+
+h1 {
   padding: 0;
   margin: 0;
 }
 
 input[type="text"] {
   border-radius: 3px;
-  border: 1px black solid;
+  border-style: solid;
+  border-width: 1px;
   padding: 6px 10px;
 }
 
-label{
-  user-select: none;
+input {
+  background-color: var(--input-background);
+  border-color: var(--foreground-color);
+  color: var(--foreground-color);
 }
 
-.card {
-  padding: 10px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+label {
+  user-select: none;
 }
 
 .full-button {
@@ -37,18 +75,19 @@ label{
   text-decoration: underline;
 }
 
-.form-error-field{
-  text-align: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 16px;
-        color: rgb(160, 0, 0);
-        margin-top: 3px;
+.form-error-field {
+  text-align: start;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: rgb(160, 0, 0);
+  margin-top: 4px;
+  margin-left: 2px;
 }
 
-/*#region DatePickeru*/
+/*#region DatePicker*/
 .date-time-field>input {
-  border: 1px black solid !important;
+  border: 1px var(--foreground-color) solid !important;
   padding: 6px 10px !important;
 }
 
@@ -58,7 +97,10 @@ label{
 
 :root {
   --date-input-width: 100%;
+  --date-picker-background: var(--input-background);
+  --date-picker-foreground: var(--foreground-color);
   --date-picker-highlight-shadow: black;
   --date-picker-highlight-border: none;
 }
+
 /*#endregion */
