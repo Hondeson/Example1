@@ -8,9 +8,6 @@ services:
     build:
       context: .
       dockerfile: Ex1.API/Dockerfile
-    expose:
-      - "80" #http
-      - "443" #https
     ports:
       - 5325:80
     depends_on:

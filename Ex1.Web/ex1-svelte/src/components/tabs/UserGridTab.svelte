@@ -19,14 +19,6 @@
     onMount(async () => {
         data = await load();
     });
-
-    const toggleDropdown = (id: any) => {
-        const dropdownContent = document.getElementById(
-            `#dropdown-content-${id}`
-        );
-
-        dropdownContent?.classList.toggle("show");
-    };
 </script>
 
 <div class="content">

@@ -1,6 +1,7 @@
 <script lang="ts">
     import "../style.css";
     import ChangeThemeButton from "../components/ChangeThemeButton.svelte";
+    import GitButton from "../components/GitButton.svelte";
 </script>
 
 <svelte:head>
@@ -18,7 +19,9 @@
         </div>
     </div>
 
-    <div class="grid-item" />
+    <div class="grid-item" >
+        <GitButton url="https://github.com/Hondeson/Ex1"/>
+    </div>
 </header>
 <main class="content">
     <slot />

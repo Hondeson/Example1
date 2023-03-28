@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . .
 
 # clean install all dependencies
-RUN npm ci
+RUN npm install
 
 # remove potential security issues
 RUN npm audit fix

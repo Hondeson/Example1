@@ -1,6 +1,6 @@
 <script lang="ts">
     import { DateInput, localeFromDateFnsLocale } from "date-picker-svelte";
-    import { cs, enUS } from "date-fns/locale";
+    import cs from "date-fns/locale/cs/index";
     import type { DateOnly } from "../../../types/DateOnly";
 
     export let selectedValue: DateOnly;
