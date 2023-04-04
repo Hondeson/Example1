@@ -17,6 +17,9 @@ services:
       - DB_NAME=Ex1
       - DB_PASSWORD=root
       - DB_USER=root
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development #dev - pro release zakomentit
+
   ex1websvelte:
     container_name: ex1_web_svelte
     image: ${DOCKER_REGISTRY-}ex1.web.svelte
@@ -32,6 +35,7 @@ services:
       - ex1api
     environment:
       - PORT=3000
+
   db:
     container_name: ex1_postgres_db
     image: hondeson/ex1-db-postgres:clean
@@ -45,6 +49,7 @@ services:
       POSTGRES_DB: Ex1
     ports:
       - "5432:5432"
+
   pgadmin:
     container_name: ex1_pgadmin
     image: dpage/pgadmin4:6.14
