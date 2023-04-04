@@ -89,12 +89,12 @@ namespace Ex1.API.Controllers
         /// </summary>
         /// <param name="user">uživatel, kterého chceme vytvořit</param>
         /// <returns>Cestu na které byl uživatel vytvořen</returns>
-        /// <response code="200">Uživatel vytvořen</response>
+        /// <response code="201">Uživatel vytvořen</response>
         /// <response code="400">Invalidní hodnota parametru</response>
         /// <response code="409">Uživatel již existuje</response>
         /// <response code="500">Chyba</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -141,10 +141,12 @@ namespace Ex1.API.Controllers
         /// <param name="id">ID uživatele, kterého chceme updatovat</param>
         /// <param name="user">Hodnoty uživatele, které chceme updatovat (mimo ID)</param>
         /// <response code="200">Uživatel updatován</response>
+        /// <response code="400">Invalidní hodnota parametru</response>
         /// <response code="404">Uživatel nenalezen</response>
         /// <response code="500">Chyba</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Put([Required] long id, [FromBody] UserModel user)
